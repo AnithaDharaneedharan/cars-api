@@ -3,6 +3,10 @@ const mongoose = require('mongoose');
 const app = express();
 require('dotenv/config');
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json());
+
+
 const carsRoute = require('./routes/cars');
 app.use('/cars', carsRoute);
 
