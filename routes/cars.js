@@ -1,26 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const Car = require('../models/Car');
+const axios = require('axios');
 
 // Gets all cars
 router.get('/', async (req, res) => {
+
   try {
-      const cars = await Car.find();
-      res.send(200).json(cars);
+    const cars = await Car.find();
+    res.json(cars);
   } catch (err) {
-      res.json({message: err})
+    res.json({ message: err });
   }
 });
 
-// Gets a  specific car 
+// Gets a  specific car
 router.get('/:carId', async (req, res) => {
-    try {
-        const car = await Car.findById(req.params.carId);
-        res.send(200).json(car);
-    } catch (err) {
-        res.json({message: err})
-    }
-  });
+  try {
+    const car = await Car.findById(req.params.carId);
+    res.json(car);
+  } catch (err) {
+    res.json({ message: err });
+  }
+});
 
 // Submits a car
 router.post('/', async (req, res) => {
@@ -30,11 +32,24 @@ router.post('/', async (req, res) => {
     colour: req.body.colour,
   });
   try {
-    const savedPost = await car.save();
-    res.send(200).json(savedPost);
+    const savedCar = await car.save();
+    res.json(savedCar);
   } catch (err) {
     res.json({ message: err });
   }
 });
+
+// Delete a car
+router.delete('/:carId', async (req, res) => {
+  console.log('del')
+  try {
+    const removedCar = await Car.remove({ _id: req.params.carId });
+    res.json(removedCar);
+  } catch (error) {
+    res.json({ message: err });
+  }
+});
+
+
 
 module.exports = router;
