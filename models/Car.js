@@ -1,9 +1,14 @@
 const mongoose = require('mongoose');
+const uniq = require("../utilities/unique.utility");
 
 const CarSchema = mongoose.Schema({
   id: {
-    type: mongoose.Types.ObjectId,
-  },
+		type: String,
+		default: function () {
+			return uniq.generate();
+		},
+		unique: true
+	},
   make: {
     type: String,
     required: true,
